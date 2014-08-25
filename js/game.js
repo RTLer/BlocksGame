@@ -9,11 +9,12 @@ var speed = 80;
 var emptycol = false.emptyrow = false, emptytemp = false;
 var point = 0, move = 0;
 var mid = Math.floor((mainMapWidth / cubeWidth) / 2);
-var temp = [], insidetemp = [], count = 0;
+var insidetemp = [], count = 0;
 var start, end;
 var arrayMap = [], Block;
 var colors = [ "#ecf0f1", "#3498db", "#2ecc71", "#e74c3c", "#ffc40f" ];
 var WidthArray = [];
+
 $("#board").mousedown(function(event) {
 	x = event.pageX - this.offsetLeft;
 	y = event.pageY - this.offsetLeft;
@@ -36,7 +37,6 @@ function startNewGame() {
 
 			arrayMap[i][j] = Math
 					.floor((Math.random() * (colors.length - 1)) + 1);
-			temp.push(i + "," + j);
 			start = new Date().getTime();
 		}
 	}
@@ -96,8 +96,11 @@ function msToTime(duration) {
 }
 setInterval(
 		function() {
+			ctx.clearRect(0, 0,mainMapHeight, mainMapWidth);
+			ctx.fillStyle = colors[0];
+			ctx.fillRect(0,0, mainMapWidth,
+					mainMapHeight);
 			if (emptytemp)
-				temp = [];
 			emptytemp = true;
 			for (var i = 0; i < mainMapHeight / cubeHeight; i++) {
 				for (var k = 0; k < mainMapWidth / cubeWidth; k++) {
@@ -111,7 +114,6 @@ setInterval(
 						move += (chenge(i, j, count) != null) ? 1 : 0;
 						x = -1;
 						y = -1;
-						temp.concat(insidetemp);
 					}
 
 					if ((arrayMap[i][j] == 9 || arrayMap[i][j] == 0)
@@ -119,8 +121,6 @@ setInterval(
 							&& (arrayMap[i - 1][j] != 9)) {
 						arrayMap[i][j] = arrayMap[i - 1][j];
 						arrayMap[i - 1][j] = 0;
-						temp.push(i + "," + j);
-						temp.push(i - 1 + "," + j);
 					}
 					var num = (j > mid) ? -1 : 1;
 					if (arrayMap[(mainMapHeight / cubeHeight) - 1][j] == 0) {
@@ -135,8 +135,6 @@ setInterval(
 							if (j + num < mainMapWidth / cubeWidth) {
 								arrayMap[g][j] = arrayMap[g][j + num];
 								arrayMap[g][j + num] = 0;
-								temp.push(g + "," + j);
-								temp.push(g + "," + j + num);
 							}
 						}
 						emptycol = true;
@@ -144,22 +142,19 @@ setInterval(
 					if (arrayMap[i][j] == 9
 							&& i != (mainMapHeight / cubeHeight) - 1) {
 						arrayMap[i][j] = 0;
-						temp.push(i + "," + j);
 					}
 				}
 			}
 			for (var i = 0; i < mainMapHeight / cubeHeight; i++) {
 				for (var k = 0; k < mainMapWidth / cubeWidth; k++) {
 					j = WidthArray[k];
-					if (temp.indexOf(i + "," + j) != -1) {
 						Block = arrayMap[i][j];
-						ctx.clearRect(k * cubeHeight + 0, i * cubeWidth + 0,
-								cubeHeight, cubeWidth);
+						if(Block!=0){
 						ctx.fillStyle = (Block != 9) ? colors[Block]
 								: "#bdc3c7";
 						ctx.fillRect(k * cubeHeight + 0, i * cubeWidth + 0,
 								cubeHeight, cubeWidth);
-					}
+						}
 				}
 			}
 			ctx.font = "16px Arial";
