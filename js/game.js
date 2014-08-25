@@ -15,7 +15,7 @@ var start, end;
 var arrayMap = [], Block;
 var colors = [ "#ecf0f1", "#3498db", "#2ecc71", "#e74c3c", "#ffc40f" ];
 var WidthArray = [];
-
+$('body').bind('touchmove', function(e){e.preventDefault()})
 $("#board").mousedown(function(event) {
 	x = event.pageX - this.offsetLeft;
 	y = event.pageY - this.offsetLeft;
