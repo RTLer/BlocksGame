@@ -122,6 +122,7 @@ setInterval(
 						temp.push(i + "," + j);
 						temp.push(i - 1 + "," + j);
 					}
+					var num = (j > mid) ? -1 : 1;
 					if (arrayMap[(mainMapHeight / cubeHeight) - 1][j] == 0) {
 						for (var g = (mainMapHeight / cubeHeight) - 1, emptycol = true; g >= 0; g--) {
 							if (arrayMap[g][j] != 0) {
@@ -130,7 +131,6 @@ setInterval(
 							}
 						}
 						if (emptycol)
-							var num = (j > mid) ? -1 : 1;
 						for (var g = 0; g < mainMapHeight / cubeHeight; g++) {
 							if (j + num < mainMapWidth / cubeWidth) {
 								arrayMap[g][j] = arrayMap[g][j + num];
@@ -139,7 +139,7 @@ setInterval(
 								temp.push(g + "," + j + num);
 							}
 						}
-						emptycol = false;
+						emptycol = true;
 					}
 					if (arrayMap[i][j] == 9
 							&& i != (mainMapHeight / cubeHeight) - 1) {
@@ -169,6 +169,6 @@ setInterval(
 			ctx.strokeStyle = 'black';
 			ctx.strokeRect(0, 0, mainMapWidth, mainMapHeight);
 			ctx.fillStyle = "#000";
-			ctx.fillText("point: " + point + " | moves: " + move + " | time: "
+			ctx.fillText("point: " + point + "/" + (mainMapHeight / cubeHeight)*(mainMapWidth / cubeWidth) + " | moves: " + move + " | time: "
 					+ msToTime(end - start), 10, mainMapHeight + 18);
 		}, speed);
