@@ -19,6 +19,7 @@ $('body').bind('touchmove', function(e){e.preventDefault()})
 $("#board").mousedown(function(event) {
 	x = event.pageX - this.offsetLeft;
 	y = event.pageY - this.offsetLeft;
+	event.preventDefault()
 });
 
 $(document).ready(startNewGame());
