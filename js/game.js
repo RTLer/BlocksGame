@@ -2,9 +2,11 @@ var c = document.getElementById("board");
 var ctx = c.getContext("2d");
 var x = -1, y = -1, moveStep = 5;
 var cubeHeight = 25, cubeWidth = 25;
+cubeWidth += ($(document).width()%cubeWidth)/Math.floor($(document).width() / cubeWidth);
+console.log(cubeWidth);
 var mainMapHeight = cubeHeight
 		* Math.floor(($(document).height() - 25) / cubeHeight);
-var mainMapWidth = cubeWidth * Math.floor($(document).width() / cubeWidth);
+var mainMapWidth = cubeWidth * $(document).width() / cubeWidth;
 var blocksHeightCount=(mainMapHeight / cubeHeight),blocksWidthCount=(mainMapWidth / cubeWidth);
 var speed = 80;
 var emptycol = false.emptyrow = false, emptytemp = false;
@@ -155,8 +157,8 @@ setInterval(
 						if(Block!=0){
 						ctx.fillStyle = (Block != 9) ? colors[Block]
 								: "#bdc3c7";
-						ctx.fillRect(k * cubeHeight, i * cubeWidth,
-								cubeHeight-.4, cubeWidth-.4);
+						ctx.fillRect(k * cubeWidth, i * cubeHeight,
+								cubeWidth-.4, cubeHeight-.4);
 						}
 				}
 			}
